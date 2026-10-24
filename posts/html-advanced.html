@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Notes on HTML, from the basics to the parts most tutorials skip.">
+    <title>HTML: From Beginner to Advanced</title>
+     <link rel="stylesheet" href="../css/style.css">
+</head>
+  
+<body>
+
+  <header>
+    <nav><a href="../index.html">&larr; Home</a></nav>
+    <h1>HTML: From Beginner to Advanced</h1>
+    <p>Notes on HTML, from the basics to the parts most tutorials skip.</p>
+  </header>
+
+    <main>
+  <!--  Introduction — its own block, comes first -->
+        <section id="intro">
+    <h2>Introduction</h2>  
+  <p>I started writing this to organize what I was learning about HTML — 
+  partly for myself, partly for anyone who's used HTML for a while but 
+  never quite got the full picture. No promises this covers everything, 
+  but here's what I've got so far.</p>
+        </section>
+    
+  <!--  Table of Contents — comes after intro, before the real content -->
+
+    <nav class="toc">
+  <h2>Contents</h2>
+
+  <ul>
+    <li><a href="#structure-basics">1. Structure Basics</a></li>
+    <li><a href="#how-browsers-read-html">2. How Browsers Read HTML</a></li>
+    <li><a href="#document-metadata">3. Document Metadata</a></li>
+    <li><a href="#semantic-layout-tags">4. Semantic Layout Tags</a></li>
+    <li>
+      <a href="#who-else-reads-your-html">5. Who Else Reads Your HTML</a>
+      <ul>
+        <li><a href="#bots">Bots</a></li>
+        <li><a href="#search-engines">Search Engines</a></li>
+        <li><a href="#screen-readers">Screen Readers</a></li>
+      </ul>
+    </li>
+    <li><a href="#forms">6. Forms</a></li>
+    <li><a href="#tables-and-media">7. Tables &amp; Media</a></li>
+    <li>
+      <a href="#accessibility">8. Accessibility</a>
+      <ul>
+        <li><a href="#alt-text">Alt Text</a></li>
+        <li><a href="#aria-labels">ARIA Labels</a></li>
+        <li><a href="#labels-and-forms">Labels &amp; Form Fields</a></li>
+        <li><a href="#keyboard-navigation">Keyboard Navigation</a></li>
+      </ul>
+    </li>
+    <li>
+  <a href="#going-further">9. Going Further</a>
+  <ul>
+    <li><a href="#global-attributes">Global Attributes &amp; data-*</a></li>
+    <li><a href="#tag-reference">Common Tags Reference</a></li>
+  </ul>
+</li>
+  </ul>
+</nav>
+
+  <!--  Now actual numbered sections begin -->
+   <section id="structure-basics">
+    <h2>1. Structure Basics</h2>
+    <p>There are 5 main structures in html</p>
+    <ol>
+        <li>Plain text contents (Text nodes)</li>
+        <li>Comments</li>
+        <li>The Doctype Declaration</li>
+        <li>Character Entities</li>
+        <li>The Elements</li>
+    </ol>
+
+    <h3>1. Plain Text Content (Text Nodes)</h3>
+    <p>
+    The simplest piece of HTML isn't a tag at all — it's just the words
+    themselves. Any text sitting between tags is called a <strong>text node</strong>,
+    and it's what the reader actually sees rendered on the page.
+    </p>
+<pre><code>&lt;p&gt;This part right here is the text node.&lt;/p&gt;</code></pre>
+    <p>
+    Tags give structure and meaning, but the text node is the actual content —
+    strip away every tag on a page, and the text nodes are what's left.
+    </p>
+
+    <h3>2. Comments</h3>
+    <p>
+    Comments let you leave notes in your code that the browser completely
+    ignores — nothing inside a comment ever renders on the page. They're
+    written like this:
+    </p>
+<pre><code>&lt;!-- This is a comment, the browser skips it --&gt;</code></pre>
+    <p>
+    Useful for leaving reminders for yourself, explaining why a piece of code
+    exists, or temporarily "switching off" a chunk of HTML without deleting it
+    while testing.
+    </p>
+
+    <h3>3. The DOCTYPE Declaration</h3>
+    <p>
+    Every HTML document should start with a single line before the
+    <code>&lt;html&gt;</code> tag:
+    </p>
+<pre><code>&lt;!DOCTYPE html&gt;</code></pre>
+    <p>
+    This tells the browser "read this page using modern HTML5 rules." Without
+    it, older browsers can fall back into something called
+    <strong>quirks mode</strong> — an old compatibility mode that renders CSS
+    and layout inconsistently, mimicking bugs from browsers in the late 90s.
+    It's not a tag, has no closing tag, and always goes exactly once at the
+    very top of the file.
+    </p>
+    <h3>4. Character Entities</h3>
+    <p>
+    Some characters can't be typed directly into HTML because the browser
+    would confuse them with actual code — most importantly
+    <code>&lt;</code> and <code>&gt;</code>, since those are how tags are
+    written. To display them as plain text, you use a
+    <strong>character entity</strong> instead: a short code starting with
+    <code>&amp;</code> and ending with <code>;</code>.
+    </p>
+    <table>
+    <thead>
+        <tr><th>You want to show</th><th>You write</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>&lt;</td><td><code>&amp;lt;</code></td></tr>
+        <tr><td>&gt;</td><td><code>&amp;gt;</code></td></tr>
+        <tr><td>&amp;</td><td><code>&amp;amp;</code></td></tr>
+        <tr><td>a non-breaking space</td><td><code>&amp;nbsp;</code></td></tr>
+        <tr><td>&copy;</td><td><code>&amp;copy;</code></td></tr>
+    </tbody>
+    </table>
+    <p>
+    You've actually already seen one in the example from earlier —
+    <code>Welcome to my blog &amp;amp; portfolio!</code> uses
+    <code>&amp;amp;</code> so the ampersand displays correctly instead of
+    potentially being misread as the start of another entity.
+    </p>
+
+    <h3>5. The Elements</h3>
+    <p>
+    An element is the full package: an opening tag, its attributes, the
+    content inside, and the closing tag. This is the "bigger picture" piece —
+    everything else on this list (text nodes, comments, entities) exists
+    <em>inside</em> or <em>around</em> elements.
+    </p>
+    <pre><code>&lt;p class="intro"&gt;Welcome to my blog &amp;amp; portfolio!&lt;/p&gt;</code></pre>
+    <ul>
+    <li><strong>Tag:</strong> <code>p</code> — defines what kind of element it is</li>
+    <li><strong>Attribute:</strong> <code>class="intro"</code> — extra info about the element</li>
+    <li><strong>Text content:</strong> "Welcome to my blog" — the text node inside it</li>
+    <li><strong>Character entity:</strong> <code>&amp;amp;</code> — the escaped ampersand</li>
+    </ul>
+    <p>
+    Put together, that single line uses all five structures from this section
+    at once — which is a nice way to end this part: none of these pieces
+    exist in isolation, they combine to make up everything you'll ever write
+    in HTML.
+    </p>
+   </section>
+
+   <section id="how-browsers-read-html">
+    <h2>2. How Browsers Read HTML</h2>
+  <p>
+    Now that you know the raw ingredients HTML is built from, the next
+    question is what actually happens to them the moment a browser opens
+    your file.
+  </p>
+
+  <h3>What Is a Browser?</h3>
+  <p>
+    A browser (Chrome, Firefox, Safari, Edge) is a program that takes a URL,
+    fetches the files behind it — HTML, CSS, JavaScript, images — and turns
+    that raw text into the visual page you see and interact with. It's
+    handling several jobs at once: networking, parsing, rendering, and
+    running JavaScript.
+  </p>
+
+  <h3>What Is a Parser?</h3>
+  <p>
+    A parser is the part of the browser that reads raw text and converts it
+    into a structured format the program can actually work with. Your HTML
+    file is just a string of characters on disk — the parser reads it
+    character by character, recognizes patterns like <code>&lt;p
+    class="intro"&gt;</code>, and builds an actual tree of connected objects
+    out of it, with real parent-child relationships the browser can query
+    and manipulate.
+  </p>
+
+  <h3>The Pipeline: From Text to Pixels</h3>
+  <p>
+    Once parsing starts, the browser moves through a fairly fixed sequence,
+    often called the <strong>critical rendering path</strong>:
+  </p>
+  <ol>
+    <li>
+      <strong>HTML Parsing —</strong> the browser reads your HTML top to
+      bottom, building the <strong>DOM</strong> (Document Object Model) —
+      the tree of every element on your page.
+    </li>
+    <li>
+      <strong>CSS Parsing —</strong> stylesheets get parsed into the
+      <strong>CSSOM</strong> (CSS Object Model), a similar tree, but for
+      styles instead of structure.
+    </li>
+    <li>
+      <strong>Render Tree —</strong> the DOM and CSSOM get combined into
+      what actually needs to be drawn. Anything set to
+      <code>display: none</code> gets excluded here.
+    </li>
+    <li>
+      <strong>Layout (Reflow) —</strong> the browser calculates the exact
+      size and position of every box on the page.
+    </li>
+    <li>
+      <strong>Paint —</strong> pixels finally get drawn to the screen.
+    </li>
+  </ol>
+
+  <h3>The Blocking Problem</h3>
+  <p>
+    There's one snag in this pipeline worth knowing: if the parser reaches a
+    <code>&lt;script&gt;</code> tag with no special instructions, it stops
+    building the DOM entirely until that script finishes downloading and
+    running. On a slow connection, that pause is very noticeable — a blank
+    page staring back at the reader.
+  </p>
+  <p>
+    This is exactly why the <code>defer</code> and <code>async</code>
+    attributes exist on <code>&lt;script&gt;</code> tags — they let the
+    script download in the background instead of freezing the parser:
+  </p>
+  <pre><code>&lt;script src="main.js" defer&gt;&lt;/script&gt;</code></pre>
+  <p>
+    <code>defer</code> waits until the HTML is fully parsed before running
+    the script, in order. <code>async</code> runs the script the instant
+    it's ready, with no order guarantee — better suited to independent
+    scripts like analytics tags than to your main page logic.
+  </p>
+  <aside class="note">
+  <p>
+    <strong>Note:</strong> this whole pipeline usually takes milliseconds,
+    but slow scripts or huge images can stretch it into seconds a reader
+    actually notices. And don't confuse the <code>async</code> attribute
+    above with JavaScript's <code>async</code>/<code>await</code>
+    keywords — same word, but one controls script loading in HTML, the
+    other handles waiting for data inside your JS code.
+  </p>
+</aside>
+</section>
+
+<section id="document-metadata">
+  <h2>3. Document Metadata</h2>
+
+  <p>
+    Everything inside <code>&lt;head&gt;</code> is invisible on the page
+    itself — none of it renders as content a reader sees. Instead, it's
+    information <em>about</em> the page: for the browser, for search
+    engines, and for anything sharing a link to it.
+  </p>
+
+  <h3>Character Encoding</h3>
+  <pre><code>&lt;meta charset="UTF-8"&gt;</code></pre>
+  <p>
+    This tells the browser which set of characters to expect when decoding
+    your file's text. UTF-8 covers virtually every character and symbol
+    in use today, which is why it's the standard default — without it,
+    special characters (accents, emoji, non-English scripts) can render as
+    garbled text.
+  </p>
+
+  <h3>The Viewport</h3>
+  <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+  <p>
+    Without this line, mobile browsers default to rendering your page as if
+    it were on a desktop screen, then shrinking the whole thing down —
+    tiny, zoomed-out text included. This tag tells the browser to match the
+    page's width to the actual device's width, which is the starting point
+    for any responsive layout.
+  </p>
+
+  <h3>The Title</h3>
+  <pre><code>&lt;title&gt;My Blog&lt;/title&gt;</code></pre>
+  <p>
+    The text that shows up in the browser tab, in bookmarks, and — as
+    covered back in Section 5 — as the clickable blue headline in search
+    results. Every page should have a unique, descriptive one.
+  </p>
+
+  <h3>Meta Description</h3>
+  <pre><code>&lt;meta name="description" content="Notes on HTML, from the basics to the parts most tutorials skip."&gt;</code></pre>
+  <p>
+    A short summary of the page, not visible on the page itself, but often
+    pulled by search engines as the gray preview snippet under your title
+    in results. Usually kept under about 160 characters.
+  </p>
+
+  <h3>Linking a Stylesheet</h3>
+  <pre><code>&lt;link rel="stylesheet" href="css/style.css"&gt;</code></pre>
+  <p>
+    <code>&lt;link&gt;</code> connects an external file to the page —
+    almost always used for CSS. It goes in <code>&lt;head&gt;</code> so
+    styles are ready before the page paints, avoiding a flash of unstyled
+    content.
+  </p>
+
+  <h3>Favicon</h3>
+  <pre><code>&lt;link rel="icon" href="images/favicon.ico"&gt;</code></pre>
+  <p>
+    The small icon shown in the browser tab and bookmarks. Small detail,
+    but its absence is one of the more obvious signs of an unfinished site.
+  </p>
+
+  <aside class="note">
+    <p>
+      <strong>Going further:</strong> there's also a family of tags called
+      Open Graph tags (<code>og:title</code>, <code>og:image</code>, etc.)
+      that control how a link looks when shared on social media or
+      messaging apps. Not essential to get started, but worth a search once
+      the rest of this feels comfortable.
+    </p>
+  </aside>
+</section>
+<section id="semantic-layout-tags">
+  <h2>4. Semantic Layout Tags</h2>
+
+  <p>
+    Every page needs some kind of layout — a top area, navigation, the main
+    content, maybe a sidebar, and a bottom area. For years, developers built
+    all of this with <code>&lt;div&gt;</code>, distinguishing each piece
+    only by a class name:
+  </p>
+
+  <pre><code>&lt;div class="top-nav"&gt;...&lt;/div&gt;
+&lt;div class="content"&gt;...&lt;/div&gt;
+&lt;div class="side-info"&gt;...&lt;/div&gt;
+&lt;div class="bottom"&gt;...&lt;/div&gt;</code></pre>
+
+  <p>
+    HTML5 introduced a set of tags that describe these same regions by
+    name, instead of relying on a class attribute to explain what
+    something is:
+  </p>
+
+  <ul>
+    <li><code>&lt;header&gt;</code> — introductory content, usually at the top of a page or section</li>
+    <li><code>&lt;nav&gt;</code> — a block of navigation links</li>
+    <li><code>&lt;main&gt;</code> — the primary content of the page; should appear once per page</li>
+    <li><code>&lt;article&gt;</code> — a self-contained piece of content, like a blog post or news story</li>
+    <li><code>&lt;section&gt;</code> — a themed grouping of content, usually with its own heading</li>
+    <li><code>&lt;aside&gt;</code> — content tangentially related to the main content, like a sidebar</li>
+    <li><code>&lt;footer&gt;</code> — closing content for a page or section</li>
+  </ul>
+
+  <p>Rewritten with semantic tags, the layout above becomes:</p>
+
+  <pre><code>&lt;header&gt;...&lt;/header&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+&lt;main&gt;...&lt;/main&gt;
+&lt;aside&gt;...&lt;/aside&gt;
+&lt;footer&gt;...&lt;/footer&gt;</code></pre>
+
+  <p>
+    Here's the catch: a browser renders both versions identically. No
+    styling difference, no layout difference, nothing visible changes by
+    switching <code>&lt;div class="top-nav"&gt;</code> to
+    <code>&lt;nav&gt;</code>.
+  </p>
+
+  <p>
+    So does it actually matter which one you use? The answer isn't in how
+    the page looks — it's in who else is reading your HTML besides the
+    person looking at the screen.
+  </p>
+</section>
+<section id="who-else-reads-your-html">
+  <h2>5. Who Else Reads Your HTML</h2>
+
+  <p>
+    A human isn't the only thing that opens your page. Several kinds of
+    automated readers process your HTML too — and none of them can
+    "see" a layout the way a person can. What they get is your raw markup,
+    which is exactly why the tags from Section 4 matter.
+  </p>
+
+  <section id="bots">
+    <h3>Bots</h3>
+    <p>
+      A bot is simply a program that performs actions automatically,
+      without a human clicking through each step. That's the whole
+      definition — what a bot actually <em>does</em> depends entirely on
+      what it was built for. Some bots are welcome guests (a search
+      engine's crawler), others are the spam accounts you've probably
+      seen in YouTube comment sections. Same basic mechanism, very
+      different intent.
+    </p>
+    <p>
+      Well-behaved bots also tend to respect a file called
+      <code>robots.txt</code>, placed at the root of a site, which tells
+      them which pages they're allowed to visit. Spam bots typically
+      ignore it entirely.
+    </p>
+  </section>
+
+  <section id="search-engines">
+    <h3>Search Engines</h3>
+    <p>
+      A search engine has three jobs: <strong>crawl</strong> the web to
+      discover pages, <strong>index</strong> what it finds, and
+      <strong>rank</strong> results when someone searches. The crawling
+      part is handled by bots — they follow every
+      <code>href</code> link they encounter, which is exactly why that
+      attribute matters beyond just letting people click things.
+    </p>
+    <p>
+      Once a page is crawled, its structure gets parsed and stored. This is
+      where semantic tags earn their keep:
+    </p>
+    <ul>
+      <li><code>&lt;title&gt;</code> becomes the clickable headline in search results</li>
+      <li><code>&lt;meta name="description"&gt;</code> often becomes the preview snippet beneath it</li>
+      <li><code>&lt;main&gt;</code> and <code>&lt;article&gt;</code> help the engine identify actual content, separate from navigation or boilerplate</li>
+      <li><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> headings signal what topics matter most</li>
+    </ul>
+    <p>
+      A page built entirely out of unlabeled <code>&lt;div&gt;</code>s
+      gives a crawler far less to work with than the same page built with
+      <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, and
+      <code>&lt;article&gt;</code> in the right places.
+    </p>
+  </section>
+
+  <section id="screen-readers">
+    <h3>Screen Readers</h3>
+    <p>
+      A screen reader is software that reads a page aloud, or converts it
+      to braille, for users who can't see the screen. Like a search
+      engine's crawler, it doesn't perceive layout visually — it relies on
+      the structure of your HTML to describe the page.
+    </p>
+    <p>
+      With semantic tags in place, a screen reader user can jump straight
+      to <code>&lt;nav&gt;</code> to find navigation, or to
+      <code>&lt;main&gt;</code> to skip straight to the actual content,
+      instead of listening through every element on the page in order to
+      find what they're looking for. A wall of identical
+      <code>&lt;div&gt;</code>s gives them no such shortcuts.
+    </p>
+    <p>
+      This is only a first look — Section 8 goes further into concrete
+      accessibility practices built on top of this same idea.
+    </p>
+  </section>
+</section>
+
+<section id="forms">
+  <h2>6. Forms</h2>
+
+  <p>
+    Forms are how a page collects input from a visitor — a search box, a
+    login screen, a contact page. Everything related to a single form sits
+    inside a <code>&lt;form&gt;</code> tag:
+  </p>
+
+  <pre><code>&lt;form action="/submit" method="POST"&gt;
+  ...
+&lt;/form&gt;</code></pre>
+
+  <p>
+    <code>action</code> is where the form's data gets sent, and
+    <code>method</code> is how — <code>GET</code> appends data to the URL,
+    <code>POST</code> sends it in the request body, typically used for
+    anything that changes data on the server (like a login or signup).
+  </p>
+
+  <h3>Labels and Inputs</h3>
+  <p>
+    Every input should be paired with a <code>&lt;label&gt;</code>. The
+    <code>for</code> attribute on the label should match the
+    <code>id</code> on the input it belongs to:
+  </p>
+
+  <pre><code>&lt;label for="email"&gt;Email&lt;/label&gt;
+&lt;input type="email" id="email" name="email"&gt;</code></pre>
+
+  <p>
+    This pairing does two things: clicking the label text focuses the
+    input automatically, and screen readers announce the label when the
+    input is focused — without it, a screen reader user just hears
+    "text field," with no idea what it's asking for.
+  </p>
+
+  <h3>Common Input Types</h3>
+  <ul>
+    <li><code>type="text"</code> — plain text</li>
+    <li><code>type="email"</code> — expects an email format, and mobile keyboards show the <code>@</code> key</li>
+    <li><code>type="password"</code> — masks what's typed</li>
+    <li><code>type="number"</code> — restricts to numeric input</li>
+    <li><code>type="checkbox"</code> — toggle, multiple can be selected</li>
+    <li><code>type="radio"</code> — pick one from a group</li>
+  </ul>
+
+  <h3>Other Form Elements</h3>
+  <pre><code>&lt;label for="topic"&gt;Topic&lt;/label&gt;
+&lt;select id="topic" name="topic"&gt;
+  &lt;option value="html"&gt;HTML&lt;/option&gt;
+  &lt;option value="css"&gt;CSS&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;label for="message"&gt;Message&lt;/label&gt;
+&lt;textarea id="message" name="message"&gt;&lt;/textarea&gt;
+
+&lt;button type="submit"&gt;Send&lt;/button&gt;</code></pre>
+
+  <p>
+    <code>&lt;select&gt;</code> gives a dropdown of choices,
+    <code>&lt;textarea&gt;</code> is a multi-line text box, and
+    <code>&lt;button type="submit"&gt;</code> triggers the form to send its
+    data.
+  </p>
+
+  <h3>Built-in Validation</h3>
+  <p>
+    HTML can enforce basic rules without any JavaScript:
+  </p>
+  <pre><code>&lt;input type="email" required&gt;
+&lt;input type="number" min="1" max="10"&gt;
+&lt;input type="text" pattern="[A-Za-z]{3,}"&gt;</code></pre>
+  <ul>
+    <li><code>required</code> — the field can't be left empty</li>
+    <li><code>min</code> / <code>max</code> — bounds for numeric input</li>
+    <li><code>pattern</code> — a regex the value must match; <code>{3,}</code> here means "3 or more characters"</li>
+  </ul>
+  <p>
+    The browser blocks submission and shows a built-in error message if
+    these aren't satisfied — useful for basic checks, though real
+    applications usually validate on the server too, since anything
+    enforced only in the browser can be bypassed.
+  </p>
+  <figure>
+  <img src="../images/form-example.png" 
+       alt="A contact form with an email field, a topic dropdown, a message box, and a send button">
+  <figcaption>The form above, rendered in the browser.</figcaption>
+</figure>
+</section>
+<section id="tables-and-media">
+  <h2>7. Tables &amp; Media</h2>
+
+  <h3>Tables</h3>
+  <p>
+    Tables are for genuinely tabular data — rows and columns of related
+    values, like a schedule or a price list. They're built from a few
+    tags working together:
+  </p>
+  <pre><code>&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Tag&lt;/th&gt;
+      &lt;th&gt;Purpose&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;code&gt;table&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;Wraps the whole table&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+  <ul>
+    <li><code>&lt;table&gt;</code> — the container for everything</li>
+    <li><code>&lt;thead&gt;</code> / <code>&lt;tbody&gt;</code> — groups the header row separately from the data rows</li>
+    <li><code>&lt;tr&gt;</code> — a table row</li>
+    <li><code>&lt;th&gt;</code> — a header cell (bold, centered by default)</li>
+    <li><code>&lt;td&gt;</code> — a regular data cell</li>
+  </ul>
+  <p>
+  Worth knowing: tables aren't meant for page layout. That was common
+  practice in the early web, before CSS had better tools for it — today,
+  layout is handled with CSS instead (a topic for another post), and
+  tables are reserved for actual tabular data.
+</p>
+
+  <h3>Images</h3>
+  <pre><code>&lt;img src="images/form-example.png" alt="A contact form with email, topic, and message fields" width="400"&gt;</code></pre>
+  <p>
+    <code>src</code> points to the file, and <code>alt</code> is required —
+    it's what a screen reader announces, and what shows if the image fails
+    to load. A useful test: if the image vanished, would the alt text alone
+    still make sense in its place?
+  </p>
+
+  <h3>Figure and Figcaption</h3>
+  <p>
+    When an image needs a caption, <code>&lt;figure&gt;</code> and
+    <code>&lt;figcaption&gt;</code> pair it semantically, rather than just
+    sitting a stray paragraph near an image:
+  </p>
+  <pre><code>&lt;figure&gt;
+  &lt;img src="images/form-example.png" alt="A contact form example"&gt;
+  &lt;figcaption&gt;The form from Section 6, rendered.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+
+  <h3>Video and Audio</h3>
+  <pre><code>&lt;video src="demo.mp4" controls width="500"&gt;&lt;/video&gt;
+
+&lt;audio src="clip.mp3" controls&gt;&lt;/audio&gt;</code></pre>
+  <p>
+    <code>controls</code> adds the browser's built-in play/pause/volume UI.
+    Without it, the media loads but gives the visitor no way to interact
+    with it.
+  </p>
+
+  <h3>Picture — Responsive Images</h3>
+  <p>
+    <code>&lt;picture&gt;</code> lets the browser choose between different
+    image files depending on screen size, useful for serving a smaller
+    file to phones instead of a full desktop-sized image:
+  </p>
+  <pre><code>&lt;picture&gt;
+  &lt;source media="(max-width: 600px)" srcset="images/form-small.png"&gt;
+  &lt;img src="images/form-example.png" alt="A contact form example"&gt;
+&lt;/picture&gt;</code></pre>
+  <p>
+    The <code>&lt;img&gt;</code> inside is still required as a fallback —
+    it's what displays if none of the <code>&lt;source&gt;</code>
+    conditions match.
+  </p>
+</section>
+<section id="accessibility">
+  <h2>8. Accessibility</h2>
+
+  <p>
+    Section 5 introduced screen readers and why semantic tags matter to
+    them. This section gets more concrete — specific attributes and habits
+    that make a page usable for people who can't rely on sight, a mouse,
+    or fine motor control.
+  </p>
+
+  <section id="alt-text">
+    <h3>Alt Text</h3>
+    <p>
+      Every meaningful <code>&lt;img&gt;</code> needs an
+      <code>alt</code> attribute — covered briefly in Section 7, worth
+      repeating here as accessibility's most basic rule. A screen reader
+      reads that text aloud in place of the image entirely.
+    </p>
+    <pre><code>&lt;img src="chart.png" alt="Bar chart showing sales rising 40% in Q3"&gt;</code></pre>
+    <p>
+      Purely decorative images (a background flourish, a divider graphic)
+      should use an empty <code>alt=""</code> rather than omitting the
+      attribute entirely — this tells the screen reader to skip it
+      silently, instead of reading out the filename as a fallback.
+    </p>
+  </section>
+
+  <section id="aria-labels">
+    <h3>ARIA Labels</h3>
+    <p>
+      Sometimes an element's purpose is visually obvious but has no text a
+      screen reader can read — an icon-only button, for example.
+      <code>aria-label</code> fills that gap:
+    </p>
+    <pre><code>&lt;button aria-label="Close menu"&gt;
+  &lt;svg&gt;...&lt;/svg&gt;
+&lt;/button&gt;</code></pre>
+    <p>
+      Without it, a screen reader user hears just "button," with no idea
+      what it does. ARIA attributes are a large topic on their own — the
+      rule worth remembering for now is to reach for real semantic HTML
+      first (a real <code>&lt;button&gt;</code>, a real
+      <code>&lt;nav&gt;</code>), and use ARIA to fill in gaps HTML can't
+      express on its own, not as a replacement for it.
+    </p>
+  </section>
+
+  <section id="labels-and-forms">
+    <h3>Labels and Form Fields</h3>
+    <p>
+      Covered in Section 6, worth restating here as an accessibility rule
+      specifically: every input needs a
+      <code>&lt;label&gt;</code>, connected with <code>for</code> matching
+      the input's <code>id</code>.
+    </p>
+    <pre><code>&lt;label for="email"&gt;Email&lt;/label&gt;
+&lt;input type="email" id="email"&gt;</code></pre>
+    <p>
+      A placeholder is not a substitute for a label — placeholder text
+      disappears the moment someone starts typing, and some screen readers
+      don't announce it at all.
+    </p>
+  </section>
+
+  <section id="keyboard-navigation">
+    <h3>Keyboard Navigation</h3>
+    <p>
+      Not everyone uses a mouse or a touchscreen — some visitors navigate
+      a page entirely with a keyboard, tabbing from element to element.
+      A few habits keep that working:
+    </p>
+    <ul>
+      <li>Use real <code>&lt;button&gt;</code> and <code>&lt;a&gt;</code> tags for clickable things, not a <code>&lt;div&gt;</code> with a click handler — real elements are keyboard-focusable automatically, a styled <code>&lt;div&gt;</code> isn't</li>
+      <li>Never remove focus outlines with <code>outline: none</code> unless you replace them with an equally visible alternative — that outline is how keyboard users see where they are on the page</li>
+      <li>Keep a logical tab order by following natural document order, rather than jumping around with a manually set <code>tabindex</code></li>
+    </ul>
+    <p>
+      A quick way to test any page you build: unplug the mouse, and try to
+      use the whole thing with Tab, Shift+Tab, and Enter alone.
+    </p>
+  </section>
+</section>
+<section id="going-further">
+  <h2>9. Going Further</h2>
+
+  <section id="global-attributes">
+    <h3>Global Attributes &amp; data-*</h3>
+    <p>
+      Most attributes only work on certain tags: <code>href</code> belongs
+      to links, <code>src</code> to images. <strong>Global attributes</strong>
+      are the exception. They can go on any element.
+    </p>
+    <ul>
+      <li><code>id</code> — a unique name for one element (what the table of contents links to)</li>
+      <li><code>class</code> — a reusable label that many elements can share, mainly for CSS and JavaScript to target</li>
+      <li><code>style</code> — inline CSS for that single element</li>
+      <li><code>title</code> — extra text shown as a tooltip on hover</li>
+      <li><code>lang</code> — the language of the content, which helps screen readers pronounce it correctly</li>
+      <li><code>hidden</code> — hides the element from the page</li>
+      <li><code>tabindex</code> — controls whether an element can receive keyboard focus</li>
+    </ul>
+
+    <h3>Custom data attributes</h3>
+    <p>
+      Any attribute that starts with <code>data-</code> is yours to invent.
+      The browser ignores it, but JavaScript can read it, which makes it a
+      tidy way to attach extra information to an element:
+    </p>
+    <pre><code>&lt;button data-level="beginner" data-topic="forms"&gt;Start&lt;/button&gt;</code></pre>
+    <pre><code>const btn = document.querySelector("button");
+console.log(btn.dataset.level); // "beginner"</code></pre>
+    <p>
+      The part after <code>data-</code> becomes a property on
+      <code>dataset</code>. This is the DOM from Section 2 at work: the
+      attribute lives in the tree, and JavaScript can reach it.
+    </p>
+  </section>
+
+  <section id="tag-reference">
+    <h3>Common Tags Reference</h3>
+    <p>A quick lookup for the tags you'll use most.</p>
+    <table>
+      <thead>
+        <tr><th>Tag</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>&lt;html&gt;</code></td><td>Root element of the page</td></tr>
+        <tr><td><code>&lt;head&gt;</code></td><td>Metadata about the page (not displayed)</td></tr>
+        <tr><td><code>&lt;title&gt;</code></td><td>Page title for the tab and search results</td></tr>
+        <tr><td><code>&lt;body&gt;</code></td><td>Everything visible on the page</td></tr>
+        <tr><td><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code></td><td>Headings, from most to least important</td></tr>
+        <tr><td><code>&lt;p&gt;</code></td><td>A paragraph of text</td></tr>
+        <tr><td><code>&lt;a&gt;</code></td><td>A link (uses the <code>href</code> attribute)</td></tr>
+        <tr><td><code>&lt;div&gt;</code></td><td>Generic block container with no meaning of its own</td></tr>
+        <tr><td><code>&lt;span&gt;</code></td><td>Generic inline container</td></tr>
+        <tr><td><code>&lt;ul&gt;</code> / <code>&lt;ol&gt;</code> / <code>&lt;li&gt;</code></td><td>Unordered list, ordered list, list item</td></tr>
+        <tr><td><code>&lt;img&gt;</code></td><td>An image (needs <code>src</code> and <code>alt</code>)</td></tr>
+        <tr><td><code>&lt;input&gt;</code></td><td>A form field</td></tr>
+        <tr><td><code>&lt;button&gt;</code></td><td>A clickable button</td></tr>
+        <tr><td><code>&lt;form&gt;</code></td><td>Groups form fields and sends their data</td></tr>
+        <tr><td><code>&lt;label&gt;</code></td><td>Text label tied to a form field</td></tr>
+        <tr><td><code>&lt;table&gt;</code></td><td>Tabular data</td></tr>
+        <tr><td><code>&lt;strong&gt;</code> / <code>&lt;em&gt;</code></td><td>Strong importance / emphasis</td></tr>
+        <tr><td><code>&lt;code&gt;</code> / <code>&lt;pre&gt;</code></td><td>Inline code / preformatted text</td></tr>
+        <tr><td><code>&lt;br&gt;</code> / <code>&lt;hr&gt;</code></td><td>Line break / horizontal rule (both void elements)</td></tr>
+        <tr><td><code>&lt;script&gt;</code></td><td>Loads or contains JavaScript</td></tr>
+        <tr><td><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code></td><td>Semantic layout tags from Section 4</td></tr>
+      </tbody>
+    </table>
+    <p>
+      That's the tour. Layout and styling come next, and that's CSS, a
+      topic for another post.
+    </p>
+  </section>
+</section>
+    
+
+</main>
+<footer>
+    <p>&copy; 2026 My Blog</p>
+  </footer>
+    
+</body>
+</html>
